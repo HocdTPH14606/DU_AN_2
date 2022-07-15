@@ -1,0 +1,58 @@
+<?php if($_SESSION["auth"]["role_id"] == 1): ?>
+<?php $_shouldextend[1]=1; ?>
+<?php else: ?>
+<?php $_shouldextend[2]=1; ?>
+<?php endif; ?>
+<?php $this->startSection('title', 'Start quiz'); ?>
+<?php $this->startSection('content'); ?> 
+<div class="card">
+ <section class="content-header">
+ <div class="container-fluid">
+ <div class="row mb-2">
+ <div class="col-sm-6">
+ <h1>Quản lý</h1>
+ </div>
+ <div class="col-sm-6">
+ <ol class="breadcrumb float-sm-right">
+ <li class="breadcrumb-item"><a href="<?php echo \htmlentities(BASE_URL . 'mon-hoc', ENT_QUOTES, 'UTF-8', false); ?>">Môn học</a></li>
+ <li class="breadcrumb-item active">Câu hỏi</li>
+ </ol>
+ </div>
+ </div>
+ </div>
+ <!-- /.container-fluid -->
+ </section>
+ <!-- /.card-header -->
+ <div class="card-body table-responsive p-0" style="height: 600px;">
+ <table class="table table-head-fixed text-nowrap">
+ <thead>
+ <th>STT</th>
+ <th>Sinh viên</th>
+ <th>Quiz</th>
+ <th>Start time</th>
+ <th>End time</th>
+ <th>Điểm</th>
+ <th>Chi tiết</th>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $StudentQuiz; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $sub): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($sub->id, ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->student_id, ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->quiz_id, ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->start_time, ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->end_time, ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->score, ENT_QUOTES, 'UTF-8', false); ?></td> 
+ <td>
+ <a href="<?php echo \htmlentities(BASE_URL . 'ql_user/chiTiet/' .$sub->student_id, ENT_QUOTES, 'UTF-8', false); ?>"  class="btn btn-primary">Chi tiết</a>
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ </table>
+ </div>
+</div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[2])) { echo $this->runChild('layouts.students.main'); } ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layouts.client.main'); } ?>
